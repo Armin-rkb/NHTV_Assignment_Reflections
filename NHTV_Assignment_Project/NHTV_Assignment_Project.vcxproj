@@ -24,11 +24,13 @@
   <ItemGroup>
     <ClInclude Include="Assets\Scripts\Header\Loader.h" />
     <ClInclude Include="Assets\Scripts\Header\Player.h" />
+    <ClInclude Include="Assets\Scripts\Header\Textures.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Assets\Scripts\Cpp\Loader.cpp" />
     <ClCompile Include="Assets\Scripts\Cpp\main.cpp" />
     <ClCompile Include="Assets\Scripts\Cpp\Player.cpp" />
+    <ClCompile Include="Assets\Scripts\Cpp\Textures.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

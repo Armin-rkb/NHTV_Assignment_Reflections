@@ -6,6 +6,8 @@
 using namespace sf;
 int main() {
 	RenderWindow window(VideoMode(1280, 720), "Reflection", Style::Default);
+	window.setFramerateLimit(60);
+	
 	Texture playerTexture;
 	playerTexture.loadFromFile("Assets/Sprites/metal_ground.png");
 
