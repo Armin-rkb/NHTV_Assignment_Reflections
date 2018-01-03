@@ -1,20 +1,19 @@
 #include <SFML\Graphics.hpp>
 #include <iostream>
 #include "../Header/Loader.h"
-#include "../Header/player.h"
+#include "../Header/Player.h"
+#include "../Header/Enemy.h"
 
 using namespace sf;
 int main() {
 	RenderWindow window(VideoMode(1280, 720), "Reflection", Style::Default);
 	window.setFramerateLimit(60);
 	
-	Texture playerTexture;
-	playerTexture.loadFromFile("Assets/Sprites/metal_ground.png");
+	Player player = Player(1280 / 2, 720 / 2);
+	Enemy lazer = Enemy(1280 / 2, 720 / 2);
 
-	Player player = Player(1280/2, 720/2, playerTexture);
-
-	// Load our images.
-	InitLoader();
+	// TODO: Pre-load our textures.
+	//InitLoader();
 
 	while (window.isOpen()) {
 		// Events.
@@ -27,22 +26,19 @@ int main() {
 				case Event::Resized:
 					printf("New window size: %i x %i\n", evnt.size.width, evnt.size.height);
 					break;
-				case Event::TextEntered:
-					if (evnt.text.unicode < 128) {
-						printf("%c", evnt.text.unicode);
-					}
-					break;
 			}
 		}
 
 		// Update.
 		player.Update();
+		lazer.Update();
 		
-		// Clear.
+		// Clear. 
 		window.clear();
 
 		// Drawing.
 		player.Draw(window);
+		lazer.Draw(window);
 		window.display();
 	}
 

@@ -4,9 +4,10 @@
 
 using namespace std;
 void InitLoader() { 
-	printf("Init Called!");
+	printf("Loader Called!");
 	Textures tex = Textures();
-	for (int i = 0; i < tex.texList.size(); i++) {
-		cout << i+1 << endl;
+	
+	for (auto i : tex.texList) {
+		i.loadFromFile(tex.playerTexturePath);
 	}
 }

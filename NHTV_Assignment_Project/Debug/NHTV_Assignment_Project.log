@@ -1,5 +1,2 @@
-﻿  Textures.cpp
-  Loader.cpp
-c:\users\das_a\desktop\my files\personal projects\nhtv_assignment_reflections\nhtv_assignment_project\assets\scripts\cpp\loader.cpp(9): warning C4018: '<': signed/unsigned mismatch
-  Generating Code...
+﻿  main.cpp
   NHTV_Assignment_Project.vcxproj -> C:\Users\das_a\Desktop\My Files\Personal Projects\NHTV_Assignment_Reflections\Debug\NHTV_Assignment_Project.exe
