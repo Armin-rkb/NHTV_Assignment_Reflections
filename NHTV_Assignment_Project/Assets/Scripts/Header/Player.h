@@ -8,7 +8,15 @@ class Player
 public:
 	Player(float x, float y);
 	~Player();
+
+public:
 	void Draw(RenderWindow& window);
 	void Update();
+
+public:
+	FloatRect getBounds();
+
+public:
+	Sprite playerSprite;
 };
 

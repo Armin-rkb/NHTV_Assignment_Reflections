@@ -1,36 +1,40 @@
 #include "../Header/Player.h"
 #include <iostream>
 
-Sprite player;
 Texture playerTexture;
 
 Player::Player(float x, float y)
 {
-	playerTexture.loadFromFile("Assets/Sprites/metal_ground.png");
-	player.setTexture(playerTexture);
-	player.setPosition(x, y);
-	player.setScale(0.2f, 0.2f);
+	playerTexture.loadFromFile("Assets/Sprites/player.png");
+	playerSprite.setTexture(playerTexture);
+	playerSprite.setPosition(x, y);
 }
 
 // Update gets called every frame.
 void Player::Update() {
+	// Player Input.
 	if (Keyboard::isKeyPressed(Keyboard::Key::A)) {
-		player.move(-5, 0.0);
+		playerSprite.move(-5, 0.0);
 	}
 	if (Keyboard::isKeyPressed(Keyboard::Key::D)) {
-		player.move(5, 0.0);
+		playerSprite.move(5, 0.0);
 	}
 	if (Keyboard::isKeyPressed(Keyboard::Key::W)) {
-		player.move(0.0, -5);
+		playerSprite.move(0.0, -5);
 	}
 	if (Keyboard::isKeyPressed(Keyboard::Key::S)) {
-		player.move(0.0, 5);
+		playerSprite.move(0.0, 5);
 	}
 }
 
 // Rendering our player.
 void Player::Draw(RenderWindow& window) {
-	window.draw(player);
+	window.draw(playerSprite);
+}
+
+FloatRect Player::getBounds() {
+	Sprite* ptrSprite = &playerSprite;
+	return ptrSprite->getGlobalBounds();
 }
 
 Player::~Player()

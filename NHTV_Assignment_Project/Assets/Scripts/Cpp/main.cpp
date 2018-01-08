@@ -10,7 +10,8 @@ int main() {
 	window.setFramerateLimit(60);
 	
 	Player player = Player(1280 / 2, 720 / 2);
-	Enemy lazer = Enemy(1280 / 2, 720 / 2);
+	Enemy lazer = Enemy(120, 72);
+
 
 	// TODO: Pre-load our textures.
 	//InitLoader();
@@ -33,8 +34,13 @@ int main() {
 		player.Update();
 		lazer.Update();
 		
+		// Collision.
+		if (player.getBounds().intersects(lazer.getBounds())) {
+			cout << "Collided with Enemy" << endl;
+		}
+
 		// Clear. 
-		window.clear();
+		window.clear(Color(150,150,150));
 
 		// Drawing.
 		player.Draw(window);
