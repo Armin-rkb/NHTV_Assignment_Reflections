@@ -15,8 +15,15 @@ public:
 
 public:
 	FloatRect getBounds();
-
-public:
+	FloatRect getReflectorBounds();
 	Sprite playerSprite;
+	RectangleShape reflector;
+	bool isReflecting;
+
+private:
+	void Reflect();
+
+private:
+	bool isJumping;
 };
 

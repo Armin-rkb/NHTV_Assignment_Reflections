@@ -11,11 +11,19 @@ public:
 public:
 	void Draw(RenderWindow& window);
 	void Update();
+	void Move();
+	void ChangeDirX(float newDirX = 0);
+	void ChangeDirY(float newDirX = 0);
+	void IncreaseBallSpeed();
 
 public:
 	FloatRect getBounds();
-
-public:
 	Sprite enemySprite;
-};
+	bool canHit;
 
+private:
+	Texture lazerTextureDanger;
+	Texture lazerTextureSafe;
+	Vector2f dir;
+	float ballSpeed;
+};

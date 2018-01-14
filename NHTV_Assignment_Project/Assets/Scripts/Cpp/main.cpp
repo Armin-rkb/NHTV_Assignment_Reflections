@@ -9,9 +9,8 @@ int main() {
 	RenderWindow window(VideoMode(1280, 720), "Reflection", Style::Default);
 	window.setFramerateLimit(60);
 	
-	Player player = Player(1280 / 2, 720 / 2);
+	Player player = Player(1280 / 2, 600);
 	Enemy lazer = Enemy(120, 72);
-
 
 	// TODO: Pre-load our textures.
 	//InitLoader();
@@ -19,8 +18,10 @@ int main() {
 	while (window.isOpen()) {
 		// Events.
 		Event evnt;
-		while (window.pollEvent(evnt)) {
-			switch (evnt.type) {
+		while (window.pollEvent(evnt)) 
+		{
+			switch (evnt.type)
+			{
 				case Event::Closed:
 					window.close();
 					break;
@@ -33,10 +34,52 @@ int main() {
 		// Update.
 		player.Update();
 		lazer.Update();
-		
+
 		// Collision.
-		if (player.getBounds().intersects(lazer.getBounds())) {
-			cout << "Collided with Enemy" << endl;
+		if (player.isReflecting && lazer.canHit) 
+		{
+			if (player.getReflectorBounds().intersects(lazer.getBounds())) 
+			{
+				// Change the direction.
+				float deltaX = lazer.enemySprite.getPosition().x - player.playerSprite.getPosition().x;
+				float deltaY = lazer.enemySprite.getPosition().y - player.playerSprite.getPosition().y;
+				if (abs(deltaX) > abs(deltaY)) 
+				{
+					if (deltaX <= 0) {
+						lazer.ChangeDirX();
+						cout << "Left?" << endl;
+					}
+					else 
+					{
+						lazer.ChangeDirX();
+						cout << "Right?" << endl;
+					}
+				}
+				else 
+				{
+					if (deltaY <= 0) 
+					{
+						lazer.ChangeDirY();
+						cout << "Top?" << endl;
+					}
+					else 
+					{
+						lazer.ChangeDirY();
+						cout << "Bottom?" << endl;
+					}
+				}
+
+				// Add ball speed.
+				//lazer.IncreaseBallSpeed();
+			}
+		}
+		else if (lazer.canHit)
+		{
+			// Player gets loses!
+			if (player.getBounds().intersects(lazer.getBounds())) 
+			{
+				window.close();
+			}
 		}
 
 		// Clear. 
