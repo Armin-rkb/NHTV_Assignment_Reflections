@@ -6,18 +6,17 @@ using namespace std;
 Enemy::Enemy(float x, float y)
 {
 	// Load the textures.
+	lazerTextureSafe.loadFromFile("Assets/Sprites/blue_lazer.png");
 	lazerTextureDanger.loadFromFile("Assets/Sprites/red_lazer.png");
 	enemySprite.setTexture(lazerTextureDanger);
-	//lazerTextureSafe.loadFromFile("Assets/Sprites/blue_lazer.png");
-	//enemySprite.setTexture(lazerTextureSafe);
 
 	enemySprite.setPosition(x, y);
 	enemySprite.setScale(2, 2);
 	enemySprite.setOrigin((float)enemySprite.getTextureRect().width / 2, (float)enemySprite.getTextureRect().height / 2);
 
 	ballSpeed = 5;
-	dir.x = 1 * ballSpeed;
-	dir.y = 1 * ballSpeed;
+	dir.x = 1;
+	dir.y = 1;
 	
 	canHit = true;
 }
@@ -31,7 +30,7 @@ void Enemy::Update()
 void Enemy::Move()
 {
 	// Constantly move our ball.
-	enemySprite.move(dir);
+	enemySprite.move(Vector2f(dir.x * ballSpeed, dir.y * ballSpeed));
 
 	// Bounce the ball inside game bounds.
 	if (enemySprite.getPosition().x < 0) {
@@ -71,12 +70,8 @@ void Enemy::ChangeDirY(float newDirY)
 void Enemy::IncreaseBallSpeed()
 {
 	ballSpeed++; 
-	//dir.x = dir.x * 1.1;
-	//dir.y = dir.y * 1.1;
-	//if (dir.y > 30) {
-	//	dir.x = dir.x * 1.1;
-	//	dir.y = dir.y * 1.1;
-	//}
+	enemySprite.setTexture(lazerTextureSafe);
+
 	cout << dir.x << endl;
 }
 

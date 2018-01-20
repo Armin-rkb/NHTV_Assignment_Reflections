@@ -70,7 +70,7 @@ int main() {
 				}
 
 				// Add ball speed.
-				//lazer.IncreaseBallSpeed();
+				lazer.IncreaseBallSpeed();
 			}
 		}
 		else if (lazer.canHit)
