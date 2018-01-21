@@ -5,9 +5,9 @@
 Texture playerTexture;
 
 // Gravity Variables.
-const int groundHeight = 600;
-const float movementSpeed = 9;
-const float gravitySpeed = 13;
+const float groundHeight = 586;
+const float movementSpeed = 12;
+const float gravitySpeed = 16;
 const float reflectorSize = 20;
 
 Player::Player(float x, float y)
@@ -22,6 +22,8 @@ Player::Player(float x, float y)
 	reflector.setOrigin((playerSize.x / 2) + (reflectorSize / 2), (playerSize.y / 2) + (reflectorSize / 2));
 	reflector.setSize(Vector2f(playerSize.x + reflectorSize, playerSize.y + reflectorSize));
 	reflector.setFillColor(Color(000, 000, 150));
+
+	canJump = true;
 }
 
 // Update gets called every frame.
@@ -43,14 +45,20 @@ void Player::Update() {
 	}
 
 	// Jumping
-	if (Keyboard::isKeyPressed(Keyboard::Key::W)) {
+	if (Keyboard::isKeyPressed(Keyboard::Key::W) && canJump) {
 		playerSprite.move(0.0, -movementSpeed * 2);
 		isJumping = true;
-	} else {
-		isJumping = false;
+	}
+	if (isJumping) {
+		jumpTime++;
+		if (jumpTime > 12) {
+			isJumping = false;
+			canJump = false;
+			jumpTime = 0;
+		}
 	}
 
-	// Jumping
+	// Reflector
 	if (Keyboard::isKeyPressed(Keyboard::Key::Space)) {
 		Reflect();
 	} else {
@@ -58,8 +66,13 @@ void Player::Update() {
 	}
 
 	// Gravity
-	if (playerSprite.getPosition().y < groundHeight && !isJumping) {
+	if (playerSprite.getPosition().y < groundHeight && !isJumping ||
+		playerSprite.getPosition().y < groundHeight && !Keyboard::isKeyPressed(Keyboard::Key::W)) 
+	{
 		playerSprite.move(0, gravitySpeed);
+	} else if (playerSprite.getPosition().y >= groundHeight) {
+		canJump = true;
+		playerSprite.setPosition(playerSprite.getPosition().x, groundHeight);
 	}
 }
 

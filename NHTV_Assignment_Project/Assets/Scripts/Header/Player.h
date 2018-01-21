@@ -24,6 +24,9 @@ private:
 	void Reflect();
 
 private:
+	bool canJump;
 	bool isJumping;
+	int jumpTime = 0;
+	int reflectTime = 0;
 };
 

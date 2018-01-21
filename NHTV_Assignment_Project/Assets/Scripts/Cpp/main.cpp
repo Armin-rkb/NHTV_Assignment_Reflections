@@ -2,15 +2,32 @@
 #include <iostream>
 #include "../Header/Loader.h"
 #include "../Header/Player.h"
+#include "../Header/Ball.h"
 #include "../Header/Enemy.h"
 
 using namespace sf;
+
+enum gameStates {
+	STARTSCREEN,
+	GAME,
+	GAMEOVER
+};
+
 int main() {
 	RenderWindow window(VideoMode(1280, 720), "Reflection", Style::Default);
 	window.setFramerateLimit(60);
-	
-	Player player = Player(1280 / 2, 600);
-	Enemy lazer = Enemy(120, 72);
+
+	gameStates currentState = GAME;
+
+	Texture groundTexture;
+	groundTexture.loadFromFile("Assets/Sprites/metal_ground.png");
+	Sprite ground;
+	ground.setTexture(groundTexture);
+	ground.setPosition(0, 620);
+
+	Player player = Player(1280 / 2, 586);
+	Ball ball = Ball(120, 72);
+	Enemy enemy = Enemy();
 
 	// TODO: Pre-load our textures.
 	//InitLoader();
@@ -20,75 +37,76 @@ int main() {
 		Event evnt;
 		while (window.pollEvent(evnt)) 
 		{
-			switch (evnt.type)
-			{
+			switch (evnt.type){
 				case Event::Closed:
 					window.close();
 					break;
-				case Event::Resized:
-					printf("New window size: %i x %i\n", evnt.size.width, evnt.size.height);
-					break;
 			}
 		}
-
-		// Update.
-		player.Update();
-		lazer.Update();
-
-		// Collision.
-		if (player.isReflecting && lazer.canHit) 
+		
+		switch (currentState) 
 		{
-			if (player.getReflectorBounds().intersects(lazer.getBounds())) 
+		case STARTSCREEN:
+			// Startscreen logic
+			break;
+		case GAME:
+			// Update.
+			player.Update();
+			ball.Update();
+			enemy.Update();
+
+			// Collision.
+			// Reflector Collision with ball.
+			if (player.isReflecting && ball.ballState == DANGEROUS)
 			{
-				// Change the direction.
-				float deltaX = lazer.enemySprite.getPosition().x - player.playerSprite.getPosition().x;
-				float deltaY = lazer.enemySprite.getPosition().y - player.playerSprite.getPosition().y;
-				if (abs(deltaX) > abs(deltaY)) 
+				if (player.getReflectorBounds().intersects(ball.getBounds()))
 				{
-					if (deltaX <= 0) {
-						lazer.ChangeDirX();
-						cout << "Left?" << endl;
+					// Change the direction.
+					float deltaX = ball.ballSprite.getPosition().x - player.playerSprite.getPosition().x;
+					float deltaY = ball.ballSprite.getPosition().y - player.playerSprite.getPosition().y;
+					if (abs(deltaX) > abs(deltaY)) {
+						if (deltaX <= 0) {
+							ball.BallHit(-1, 0);
+							cout << "Left?" << endl;
+						}
+						else {
+							ball.BallHit(1, 0);
+							cout << "Right?" << endl;
+						}
 					}
-					else 
-					{
-						lazer.ChangeDirX();
-						cout << "Right?" << endl;
+					else {
+						if (deltaY <= 0) {
+							ball.BallHit(0, -1);
+							cout << "Top?" << endl;
+						}
+						else {
+							ball.BallHit(0, 1);
+							cout << "Bottom?" << endl;
+						}
 					}
 				}
-				else 
-				{
-					if (deltaY <= 0) 
-					{
-						lazer.ChangeDirY();
-						cout << "Top?" << endl;
-					}
-					else 
-					{
-						lazer.ChangeDirY();
-						cout << "Bottom?" << endl;
-					}
-				}
-
-				// Add ball speed.
-				lazer.IncreaseBallSpeed();
 			}
-		}
-		else if (lazer.canHit)
-		{
-			// Player gets loses!
-			if (player.getBounds().intersects(lazer.getBounds())) 
+			// Player collision with ball.
+			else if (ball.ballState == DANGEROUS)
 			{
-				window.close();
+				// Player loses!
+				if (player.getBounds().intersects(ball.getBounds()))
+				{
+					window.close();
+				}
 			}
+
+			// Clear.
+			window.clear(Color(150, 150, 150));
+
+			// Drawing.
+			window.draw(ground);
+			player.Draw(window);
+			enemy.Draw(window);
+			ball.Draw(window);
+			window.display();
+			break;
 		}
-
-		// Clear. 
-		window.clear(Color(150,150,150));
-
-		// Drawing.
-		player.Draw(window);
-		lazer.Draw(window);
-		window.display();
 	}
 
 	return 0;

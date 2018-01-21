@@ -1,29 +1,24 @@
 #pragma once
 #include "SFML\Graphics.hpp"
+#include <iostream>
 
+using namespace std;
 using namespace sf;
 class Enemy
 {
 public:
-	Enemy(float x, float y);
+	Enemy();
 	~Enemy();
 
 public:
 	void Draw(RenderWindow& window);
-	void Update();
-	void Move();
-	void ChangeDirX(float newDirX = 0);
-	void ChangeDirY(float newDirX = 0);
-	void IncreaseBallSpeed();
+	void Update(); 
+	void EnemyHit();
 
 public:
 	FloatRect getBounds();
 	Sprite enemySprite;
-	bool canHit;
 
 private:
-	Texture lazerTextureDanger;
-	Texture lazerTextureSafe;
-	Vector2f dir;
-	float ballSpeed;
+	Texture enemyTexture;
 };
