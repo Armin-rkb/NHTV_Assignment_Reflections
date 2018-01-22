@@ -24,6 +24,7 @@
   <ItemGroup>
     <ClInclude Include="Assets\Scripts\Header\Ball.h" />
     <ClInclude Include="Assets\Scripts\Header\Enemy.h" />
+    <ClInclude Include="Assets\Scripts\Header\Laser.h" />
     <ClInclude Include="Assets\Scripts\Header\Loader.h" />
     <ClInclude Include="Assets\Scripts\Header\Player.h" />
     <ClInclude Include="Assets\Scripts\Header\Textures.h" />
@@ -31,6 +32,7 @@
   <ItemGroup>
     <ClCompile Include="Assets\Scripts\Cpp\Ball.cpp" />
     <ClCompile Include="Assets\Scripts\Cpp\Enemy.cpp" />
+    <ClCompile Include="Assets\Scripts\Cpp\Laser.cpp" />
     <ClCompile Include="Assets\Scripts\Cpp\Loader.cpp" />
     <ClCompile Include="Assets\Scripts\Cpp\main.cpp" />
     <ClCompile Include="Assets\Scripts\Cpp\Player.cpp" />

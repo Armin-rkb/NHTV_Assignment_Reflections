@@ -1,5 +1,7 @@
 #pragma once
 #include "SFML\Graphics.hpp"
+#include "../Header/Laser.h"
+#include "../Header/Player.h"
 #include <iostream>
 
 using namespace std;
@@ -23,16 +25,17 @@ public:
 
 public:
 	FloatRect getEnemyBounds();
-	FloatRect getLaserBounds();
 	Sprite enemySprite;
 	EnemyState enemyState;
-	RectangleShape laser;
 
 private:
+	void Move();
 	void ShootLaser();
 
 private:
+	vector <Laser> laserVec;
 	Texture enemyTexture;
 	float dirX;
 	float enemySpeed;
+	Clock clock;
 };

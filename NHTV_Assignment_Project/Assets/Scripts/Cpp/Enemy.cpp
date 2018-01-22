@@ -11,11 +11,6 @@ Enemy::Enemy()
 	enemySprite.setScale(1.25, 1.25);
 	enemySprite.setOrigin((float)enemySprite.getTextureRect().width / 2, (float)enemySprite.getTextureRect().height / 2);
 	
-	// Set Laser transform.
-	laser.setSize(Vector2f(20, 80));
-	laser.setOrigin(Vector2f(10, 40));
-	laser.setFillColor(Color(000, 000, 150));
-
 	enemyState = ALIVE;
 	dirX = 1;
 	enemySpeed = 3;
@@ -24,15 +19,35 @@ Enemy::Enemy()
 void Enemy::Update() 
 {
 	if (enemyState == ALIVE) {
-		enemySprite.move(Vector2f(enemySpeed * dirX, 0));
-		
-		// Flip direction when reaching the borders.
-		if (enemySprite.getPosition().x > 1280) {
-			dirX = -1;
-		}
-		else if (enemySprite.getPosition().x < 0) {
-			dirX = 1;
-		}
+		Move();
+		ShootLaser();
+	}
+	for (int i = 0; i < laserVec.size(); i++) {
+		laserVec[i].Update();
+	}
+}
+
+void Enemy::Move() 
+{
+	enemySprite.move(Vector2f(enemySpeed * dirX, 0));
+
+	// Flip direction when reaching the game borders.
+	if (enemySprite.getPosition().x > 1280) {
+		dirX = -1;
+	}
+	else if (enemySprite.getPosition().x < 0) {
+		dirX = 1;
+	}
+}
+
+void Enemy::ShootLaser()
+{
+	if (clock.getElapsedTime() > seconds(3)) {
+		cout << "Shoot Laser!" << endl;
+		Laser newLaser;
+		newLaser.setPosition(enemySprite.getPosition().x, enemySprite.getPosition().y);
+		laserVec.push_back(newLaser);
+		clock.restart();
 	}
 }
 
@@ -42,27 +57,19 @@ void Enemy::EnemyHit()
 	enemyState = DEAD; 
 }
 
-void Enemy::ShootLaser()
-{
-
-}
-
 // Rendering our Enemy.
 void Enemy::Draw(RenderWindow& window) 
 {
 	window.draw(enemySprite);
+	for (int i = 0; i < laserVec.size(); i++) {
+		laserVec[i].Draw(window);
+	}
 }
 
 // Returns the bounds of our enemy.
 FloatRect Enemy::getEnemyBounds() {
 	Sprite* ptrEnemy = &enemySprite;
 	return ptrEnemy->getGlobalBounds();
-}
-
-// Returns the bounds of our enemy laser.
-FloatRect Enemy::getLaserBounds() {
-	RectangleShape* ptrLaser = &laser;
-	return ptrLaser->getGlobalBounds();
 }
 
 Enemy::~Enemy()
