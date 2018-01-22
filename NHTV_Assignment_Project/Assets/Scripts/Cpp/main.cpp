@@ -56,45 +56,7 @@ int main() {
 			enemy.Update();
 
 			// Collision.
-			// Reflector Collision with ball.
-			if (player.isReflecting && ball.ballState == DANGEROUS)
-			{
-				if (player.getReflectorBounds().intersects(ball.getBounds()))
-				{
-					// Change the direction.
-					float deltaX = ball.ballSprite.getPosition().x - player.playerSprite.getPosition().x;
-					float deltaY = ball.ballSprite.getPosition().y - player.playerSprite.getPosition().y;
-					if (abs(deltaX) > abs(deltaY)) {
-						if (deltaX <= 0) {
-							ball.BallHit(-1, 0);
-							cout << "Left?" << endl;
-						}
-						else {
-							ball.BallHit(1, 0);
-							cout << "Right?" << endl;
-						}
-					}
-					else {
-						if (deltaY <= 0) {
-							ball.BallHit(0, -1);
-							cout << "Top?" << endl;
-						}
-						else {
-							ball.BallHit(0, 1);
-							cout << "Bottom?" << endl;
-						}
-					}
-				}
-			}
-			// Player collision with ball.
-			else if (ball.ballState == DANGEROUS)
-			{
-				// Player loses!
-				if (player.getBounds().intersects(ball.getBounds()))
-				{
-					window.close();
-				}
-			}
+			ball.CheckCollision(player, enemy);
 
 			// Clear.
 			window.clear(Color(150, 150, 150));

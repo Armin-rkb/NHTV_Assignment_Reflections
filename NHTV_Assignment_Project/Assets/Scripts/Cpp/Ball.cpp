@@ -51,6 +51,59 @@ void Ball::Update()
 	}
 }
 
+void Ball::CheckCollision(Player& player, Enemy& enemy)
+{
+	// Reflector Collision with ball.
+	if (player.isReflecting && ballState == DANGEROUS)
+	{
+		if (player.getReflectorBounds().intersects(getBallBounds()))
+		{
+			// Change the direction.
+			float deltaX = ballSprite.getPosition().x - player.playerSprite.getPosition().x;
+			float deltaY = ballSprite.getPosition().y - player.playerSprite.getPosition().y;
+			if (abs(deltaX) > abs(deltaY)) {
+				if (deltaX <= 0) {
+					BallHit(-1, 0);
+					cout << "Left" << endl;
+				}
+				else {
+					BallHit(1, 0);
+					cout << "Right" << endl;
+				}
+			}
+			else {
+				if (deltaY <= 0) {
+					BallHit(0, -1);
+					cout << "Top" << endl;
+				}
+				else {
+					BallHit(0, 1);
+					cout << "Bottom" << endl;
+				}
+			}
+		}
+	}
+
+	// Player collision with ball.
+	if (ballState == DANGEROUS)
+	{
+		// Player loses!
+		if (player.getBounds().intersects(getBallBounds()))
+		{
+			cout << "Gameover!" << endl;
+		}
+	}
+
+	// Ball collision with enemy.
+	if (ballState == SAFE && enemy.enemyState == ALIVE)
+	{
+		if (getBallBounds().intersects(enemy.getEnemyBounds()))
+		{
+			enemy.EnemyHit();
+		}
+	}
+}
+
 void Ball::Move()
 {
 	// Constantly move our ball.
@@ -116,7 +169,7 @@ void Ball::Draw(RenderWindow& window)
 }
 
 // Returns the bounds of our Ball.
-FloatRect Ball::getBounds() {
+FloatRect Ball::getBallBounds() {
 	Sprite* ptrSprite = &ballSprite;
 	return ptrSprite->getGlobalBounds();
 }
