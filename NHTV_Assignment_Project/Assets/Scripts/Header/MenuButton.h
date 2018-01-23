@@ -12,11 +12,14 @@ public:
 	~MenuButton();
 
 public:
-	void Update();
 	void Draw(RenderWindow& window);
+	bool CheckButtonPress(RenderWindow& window);
+
+private:
 
 private:
 	Texture buttonTexture;
 	Sprite buttonSprite;
+	bool isPressed = false;
 };
 

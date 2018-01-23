@@ -18,7 +18,6 @@ int main() {
 	RenderWindow window(VideoMode(1280, 720), "Reflection", Style::Default);
 	window.setFramerateLimit(60);
 
-
 	Texture groundTexture;
 	groundTexture.loadFromFile("Assets/Sprites/metal_ground.png");
 	Sprite ground;
@@ -51,10 +50,15 @@ int main() {
 		case STARTSCREEN:
 			// Startscreen logic
 			// Update.
-			menuButton.Update();
+			if (menuButton.CheckButtonPress(window) == true) {
+				currentState = GAME;
+			}
 
 			// Rendering.
 			menuButton.Draw(window);
+
+			// Display the window.
+			window.display();
 			break;
 		case GAME:
 			// Update.
@@ -73,6 +77,8 @@ int main() {
 			player.Draw(window);
 			enemy.Draw(window);
 			ball.Draw(window);
+
+			// Display the window.
 			window.display();
 			break;
 		}
