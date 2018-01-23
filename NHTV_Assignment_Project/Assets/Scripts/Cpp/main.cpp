@@ -1,9 +1,9 @@
 #include <SFML\Graphics.hpp>
 #include <iostream>
-#include "../Header/Loader.h"
 #include "../Header/Player.h"
 #include "../Header/Ball.h"
 #include "../Header/Enemy.h"
+#include "../Header/MenuButton.h"
 
 using namespace sf;
 
@@ -12,12 +12,12 @@ enum gameStates {
 	GAME,
 	GAMEOVER
 };
+gameStates currentState = STARTSCREEN;
 
 int main() {
 	RenderWindow window(VideoMode(1280, 720), "Reflection", Style::Default);
 	window.setFramerateLimit(60);
 
-	gameStates currentState = GAME;
 
 	Texture groundTexture;
 	groundTexture.loadFromFile("Assets/Sprites/metal_ground.png");
@@ -25,13 +25,15 @@ int main() {
 	ground.setTexture(groundTexture);
 	ground.setPosition(0, 620);
 
+	// Menu vars.
+	MenuButton menuButton(groundTexture);
+
+	// Game vars.
 	Player player = Player(1280 / 2, 586);
 	Ball ball = Ball(120, 72);
 	Enemy enemy = Enemy(player);
 
-	// TODO: Pre-load our textures.
-	//InitLoader();
-
+	// Game Loop.
 	while (window.isOpen()) {
 		// Events.
 		Event evnt;
@@ -48,6 +50,11 @@ int main() {
 		{
 		case STARTSCREEN:
 			// Startscreen logic
+			// Update.
+			menuButton.Update();
+
+			// Rendering.
+			menuButton.Draw(window);
 			break;
 		case GAME:
 			// Update.
@@ -61,7 +68,7 @@ int main() {
 			// Clear.
 			window.clear(Color(150, 150, 150));
 
-			// Drawing.
+			// Rendering.
 			window.draw(ground);
 			player.Draw(window);
 			enemy.Draw(window);

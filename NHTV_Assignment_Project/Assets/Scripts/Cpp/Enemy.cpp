@@ -44,14 +44,14 @@ void Enemy::Move()
 
 void Enemy::ShootLaser()
 {
-	if (clock.getElapsedTime() > seconds(3)) {
+	if (laserCD.getElapsedTime() > seconds(3)) {
 		// Create a new Laser and add it to the list.
 		Laser newLaser;
 		newLaser.setPosition(enemySprite.getPosition().x, enemySprite.getPosition().y);
 		laserVec.push_back(newLaser);
 		
 		// Restart the clock to count for the next laser.
-		clock.restart();
+		laserCD.restart();
 	}
 }
 

@@ -38,5 +38,5 @@ private:
 	Texture enemyTexture;
 	float dirX;
 	float enemySpeed;
-	Clock clock;
+	Clock laserCD;
 };
