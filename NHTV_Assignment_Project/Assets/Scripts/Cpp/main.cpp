@@ -27,7 +27,7 @@ int main() {
 
 	Player player = Player(1280 / 2, 586);
 	Ball ball = Ball(120, 72);
-	Enemy enemy = Enemy();
+	Enemy enemy = Enemy(player);
 
 	// TODO: Pre-load our textures.
 	//InitLoader();

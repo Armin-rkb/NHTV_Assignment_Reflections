@@ -1,6 +1,6 @@
 #include "../Header/Enemy.h"
 
-Enemy::Enemy()
+Enemy::Enemy(Player& player)
 {
 	// Load the textures.
 	enemyTexture.loadFromFile("Assets/Sprites/enemy_invader.png");
@@ -14,6 +14,8 @@ Enemy::Enemy()
 	enemyState = ALIVE;
 	dirX = 1;
 	enemySpeed = 3;
+
+	playerPtr = &player;
 }
 
 void Enemy::Update() 
@@ -22,8 +24,8 @@ void Enemy::Update()
 		Move();
 		ShootLaser();
 	}
-	for (int i = 0; i < laserVec.size(); i++) {
-		laserVec[i].Update();
+	for (int i = 0; i < (int)laserVec.size(); i++) {
+		laserVec[i].Update(playerPtr);
 	}
 }
 
@@ -43,10 +45,12 @@ void Enemy::Move()
 void Enemy::ShootLaser()
 {
 	if (clock.getElapsedTime() > seconds(3)) {
-		cout << "Shoot Laser!" << endl;
+		// Create a new Laser and add it to the list.
 		Laser newLaser;
 		newLaser.setPosition(enemySprite.getPosition().x, enemySprite.getPosition().y);
 		laserVec.push_back(newLaser);
+		
+		// Restart the clock to count for the next laser.
 		clock.restart();
 	}
 }
@@ -57,11 +61,11 @@ void Enemy::EnemyHit()
 	enemyState = DEAD; 
 }
 
-// Rendering our Enemy.
+// Rendering our Enemy and shot lasers.
 void Enemy::Draw(RenderWindow& window) 
 {
 	window.draw(enemySprite);
-	for (int i = 0; i < laserVec.size(); i++) {
+	for (int i = 0; i < (int)laserVec.size(); i++) {
 		laserVec[i].Draw(window);
 	}
 }

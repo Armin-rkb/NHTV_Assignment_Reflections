@@ -15,7 +15,7 @@ enum EnemyState {
 class Enemy
 {
 public:
-	Enemy();
+	Enemy(Player& player);
 	~Enemy();
 
 public:
@@ -33,6 +33,7 @@ private:
 	void ShootLaser();
 
 private:
+	Player* playerPtr;
 	vector <Laser> laserVec;
 	Texture enemyTexture;
 	float dirX;

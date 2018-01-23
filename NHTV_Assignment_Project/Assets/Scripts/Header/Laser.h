@@ -1,5 +1,6 @@
 #pragma once
 #include "SFML\Graphics.hpp"
+#include <iostream>
 #include "../Header/Player.h"
 
 using namespace std;
@@ -12,7 +13,7 @@ public:
 
 public:
 	void Draw(RenderWindow& window);
-	void Update();
+	void Update(Player* player);
 	void setPosition(float x, float y);
 
 public:
@@ -20,7 +21,7 @@ public:
 
 private:
 	void MoveLaser();
-	void CheckCollision();
+	void CheckCollision(Player* player);
 
 private:
 	RectangleShape laser;

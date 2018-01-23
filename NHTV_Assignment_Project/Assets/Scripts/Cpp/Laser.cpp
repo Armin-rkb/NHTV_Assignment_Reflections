@@ -1,4 +1,5 @@
 #include "../Header/Laser.h"
+#include "../Header/Player.h"
 
 Laser::Laser()
 {
@@ -10,10 +11,10 @@ Laser::Laser()
 	laserSpeed = 20;
 }
 
-void Laser::Update()
+void Laser::Update(Player* player)
 {
 	MoveLaser();
-	CheckCollision();
+	CheckCollision(player);
 }
 
 void Laser::MoveLaser()
@@ -21,8 +22,11 @@ void Laser::MoveLaser()
 	laser.move(Vector2f(0, laserSpeed));
 }
 
-void Laser::CheckCollision()
+void Laser::CheckCollision(Player* player)
 {
+	if (getLaserBounds().intersects(player->getBounds())) {
+		cout << "Laser hit player!" << endl;
+	}
 }
 
 void Laser::setPosition(float x, float y) {
