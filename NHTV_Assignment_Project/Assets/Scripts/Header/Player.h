@@ -27,7 +27,9 @@ private:
 private:
 	bool canJump;
 	bool isJumping;
+	bool canReflect;
+	bool reflectCooling;
 	int jumpTime = 0;
-	int reflectTime = 0;
+	Clock reflectTime;
 };
 

@@ -1,5 +1,6 @@
 #pragma once
 #include "SFML\Graphics.hpp"
+#include <functional>
 #include <iostream>
 
 using namespace std;
@@ -13,7 +14,7 @@ public:
 
 public:
 	void Draw(RenderWindow& window);
-	bool CheckButtonPress(RenderWindow& window);
+	void CheckButtonPress(RenderWindow& window, void (*callback) (void));
 
 private:
 

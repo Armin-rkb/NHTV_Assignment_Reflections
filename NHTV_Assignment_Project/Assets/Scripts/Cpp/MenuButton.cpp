@@ -8,10 +8,10 @@ MenuButton::MenuButton(Texture& texture)
 }
 
 // Registering the click of the left mouse button.
-bool MenuButton::CheckButtonPress(RenderWindow& window)
+void MenuButton::CheckButtonPress(RenderWindow& window, void(*callback) (void))
 {
 	if (Mouse::isButtonPressed(Mouse::Left)) {
-		if (buttonSprite.getGlobalBounds().contains(Mouse::getPosition(window).x, Mouse::getPosition(window).y)) {
+		if (buttonSprite.getGlobalBounds().contains((float)Mouse::getPosition(window).x, (float)Mouse::getPosition(window).y)) {
 			isPressed = true;
 		} else {
 			isPressed = false;
@@ -20,7 +20,8 @@ bool MenuButton::CheckButtonPress(RenderWindow& window)
 
 	if (!Mouse::isButtonPressed(Mouse::Left) && isPressed) {
 		isPressed = false;
-		return true;
+		cout << "Click" << endl;
+		callback();
 	}
 }
 

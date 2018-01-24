@@ -21,9 +21,12 @@ Player::Player(float x, float y)
 
 	reflector.setOrigin((playerSize.x / 2) + (reflectorSize / 2), (playerSize.y / 2) + (reflectorSize / 2));
 	reflector.setSize(Vector2f(playerSize.x + reflectorSize, playerSize.y + reflectorSize));
-	reflector.setFillColor(Color(000, 000, 150));
+	reflector.setFillColor(Color(000, 000, 150, 190));
 
 	canJump = true;
+	canReflect = true;
+	reflectCooling = false;
+	isReflecting = false;
 }
 
 // Update gets called every frame.
@@ -59,10 +62,37 @@ void Player::Update() {
 	}
 
 	// Reflector
+	// Start reflecting when we aren't on cooldown.
 	if (Keyboard::isKeyPressed(Keyboard::Key::Space)) {
-		Reflect();
-	} else {
-		isReflecting = false;
+		if (canReflect == true && reflectCooling == false) {
+			canReflect = false;
+			isReflecting = true;
+			reflectTime.restart();
+		}
+	}
+	else {
+		// Ensuring we can't hold the spacebar to keep reflecting. 
+		canReflect = true;
+	}
+
+	// Activate the reflector for an amount of time.
+	if (isReflecting == true) {
+		if (reflectTime.getElapsedTime() < milliseconds(100)) {
+			Reflect();
+		}
+		else {
+			// Go on cooldown.
+			isReflecting = false;
+			reflectCooling = true;
+			reflectTime.restart();
+		}
+	}
+
+	// Cooldown for a set amount of time.
+	if (isReflecting == false && reflectCooling == true) {
+		if (reflectTime.getElapsedTime() > milliseconds(500)) {
+			reflectCooling = false;
+		}
 	}
 
 	// Gravity

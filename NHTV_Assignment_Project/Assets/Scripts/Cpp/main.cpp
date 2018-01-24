@@ -20,9 +20,6 @@ int main() {
 
 	Texture groundTexture;
 	groundTexture.loadFromFile("Assets/Sprites/metal_ground.png");
-	Sprite ground;
-	ground.setTexture(groundTexture);
-	ground.setPosition(0, 620);
 
 	// Menu vars.
 	MenuButton menuButton(groundTexture);
@@ -31,6 +28,9 @@ int main() {
 	Player player = Player(1280 / 2, 586);
 	Ball ball = Ball(120, 72);
 	Enemy enemy = Enemy(player);
+	Sprite ground;
+	ground.setTexture(groundTexture);
+	ground.setPosition(0, 620);
 
 	// Game Loop.
 	while (window.isOpen()) {
@@ -48,12 +48,12 @@ int main() {
 		switch (currentState) 
 		{
 		case STARTSCREEN:
-			// Startscreen logic
+			// Startscreen logic.
 			// Update.
-			if (menuButton.CheckButtonPress(window) == true) {
+			menuButton.CheckButtonPress(window, []{
 				currentState = GAME;
-			}
-
+			});
+			
 			// Rendering.
 			menuButton.Draw(window);
 
@@ -61,6 +61,7 @@ int main() {
 			window.display();
 			break;
 		case GAME:
+			// Game logic.
 			// Update.
 			player.Update();
 			ball.Update();
