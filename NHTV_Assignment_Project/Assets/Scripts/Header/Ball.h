@@ -2,6 +2,7 @@
 #include "SFML\Graphics.hpp"
 #include "../Header/Player.h"
 #include "../Header/Enemy.h"
+#include "../Header/Score.h"
 
 using namespace sf;
 
@@ -13,7 +14,7 @@ enum BallState {
 class Ball
 {
 public:
-	Ball(float x, float y);
+	Ball(float x, float y, Score& score);
 	~Ball();
 
 public:
@@ -39,4 +40,5 @@ private:
 	Vector2f dir;
 	float ballSpeed;
 	int cdTime = 0;
+	Score* scorePtr;
 };

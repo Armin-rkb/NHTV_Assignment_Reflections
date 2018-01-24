@@ -20,7 +20,6 @@ void MenuButton::CheckButtonPress(RenderWindow& window, void(*callback) (void))
 
 	if (!Mouse::isButtonPressed(Mouse::Left) && isPressed) {
 		isPressed = false;
-		cout << "Click" << endl;
 		callback();
 	}
 }

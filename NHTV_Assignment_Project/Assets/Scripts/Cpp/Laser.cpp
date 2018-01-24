@@ -1,11 +1,10 @@
 #include "../Header/Laser.h"
-#include "../Header/Player.h"
 
 Laser::Laser()
 {
 	// Set Laser transform.
 	laser.setSize(Vector2f(15, 60));
-	laser.setOrigin(Vector2f(10, 40));
+	laser.setOrigin(Vector2f(7.5, 30));
 	laser.setFillColor(Color(150, 000, 000));
 
 	laserSpeed = 20;
@@ -22,10 +21,11 @@ void Laser::MoveLaser()
 	laser.move(Vector2f(0, laserSpeed));
 }
 
+// Checking if the laser hits the player.
 void Laser::CheckCollision(Player* player)
 {
 	if (getLaserBounds().intersects(player->getBounds())) {
-		cout << "Laser hit player!" << endl;
+		player->PlayerHit();
 	}
 }
 

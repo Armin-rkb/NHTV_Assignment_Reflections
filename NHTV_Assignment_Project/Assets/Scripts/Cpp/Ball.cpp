@@ -3,7 +3,7 @@
 
 using namespace std;
 
-Ball::Ball(float x, float y)
+Ball::Ball(float x, float y, Score& score)
 {
 	// Load the textures.
 	ballTextureSafe.loadFromFile("Assets/Sprites/blue_ball.png");
@@ -14,6 +14,7 @@ Ball::Ball(float x, float y)
 	ballSprite.setScale(2, 2);
 	ballSprite.setOrigin((float)ballSprite.getTextureRect().width / 2, (float)ballSprite.getTextureRect().height / 2);
 
+	scorePtr = &score;
 	ballSpeed = 5;
 	dir.x = 1;
 	dir.y = 1;
@@ -27,6 +28,7 @@ void Ball::Update()
 	// Always move our ball.
 	Move();
 
+	// Checking to reset the ball.
 	if (ballState == SAFE)
 	{
 		cdTime++;
@@ -90,7 +92,7 @@ void Ball::CheckCollision(Player& player, Enemy& enemy)
 		// Player loses!
 		if (player.getBounds().intersects(getBallBounds()))
 		{
-			cout << "Gameover!" << endl;
+			player.PlayerHit();
 		}
 	}
 
@@ -100,6 +102,7 @@ void Ball::CheckCollision(Player& player, Enemy& enemy)
 		if (getBallBounds().intersects(enemy.getEnemyBounds()))
 		{
 			enemy.EnemyHit();
+			scorePtr->AddScore(1);
 		}
 	}
 }

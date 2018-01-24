@@ -1,7 +1,6 @@
 #pragma once
 #include "SFML\Graphics.hpp"
 #include "../Header/Laser.h"
-#include "../Header/Player.h"
 #include <iostream>
 
 using namespace std;
@@ -34,7 +33,7 @@ private:
 
 private:
 	Player* playerPtr;
-	vector <Laser> laserVec;
+	vector<Laser> laserVec;
 	Texture enemyTexture;
 	float dirX;
 	float enemySpeed;

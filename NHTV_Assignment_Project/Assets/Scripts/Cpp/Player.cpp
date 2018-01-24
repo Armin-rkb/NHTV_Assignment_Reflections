@@ -113,6 +113,12 @@ void Player::Reflect()
 	reflector.setPosition(playerSprite.getPosition());
 }
 
+// Gets called when the player is hit.
+void Player::PlayerHit()
+{
+	cout << "Player Died!" << endl;
+}
+
 // Rendering our player.
 void Player::Draw(RenderWindow& window) {
 	window.draw(playerSprite);

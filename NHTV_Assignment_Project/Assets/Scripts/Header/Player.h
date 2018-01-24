@@ -13,6 +13,7 @@ public:
 public:
 	void Draw(RenderWindow& window);
 	void Update();
+	void PlayerHit();
 
 public:
 	FloatRect getBounds();

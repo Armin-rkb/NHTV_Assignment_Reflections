@@ -1,7 +1,5 @@
 #pragma once
 #include "SFML\Graphics.hpp"
-#include <functional>
-#include <iostream>
 
 using namespace std;
 using namespace sf;
@@ -15,8 +13,6 @@ public:
 public:
 	void Draw(RenderWindow& window);
 	void CheckButtonPress(RenderWindow& window, void (*callback) (void));
-
-private:
 
 private:
 	Texture buttonTexture;
