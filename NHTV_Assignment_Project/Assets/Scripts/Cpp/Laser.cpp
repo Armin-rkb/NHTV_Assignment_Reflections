@@ -7,7 +7,7 @@ Laser::Laser()
 	laser.setOrigin(Vector2f(7.5, 30));
 	laser.setFillColor(Color(150, 000, 000));
 
-	laserSpeed = 20;
+	laserSpeed = 15;
 }
 
 void Laser::Update(Player* player)
@@ -16,6 +16,7 @@ void Laser::Update(Player* player)
 	CheckCollision(player);
 }
 
+// Shoot the laser downwards.
 void Laser::MoveLaser()
 {
 	laser.move(Vector2f(0, laserSpeed));
@@ -29,8 +30,23 @@ void Laser::CheckCollision(Player* player)
 	}
 }
 
-void Laser::setPosition(float x, float y) {
+// Set the position of the laser.
+void Laser::setPosition(float x, float y) 
+{
 	laser.setPosition(x, y);
+}
+
+// Check if the player is still within the game field.
+bool Laser::WithinBounds()
+{
+	if (laser.getPosition().y > (720 + laser.getSize().y)) {
+		// Laser is outside the gamefield.
+		return false;
+	}
+	else {
+		// Laser is still within the gamefield.
+		return true;
+	}
 }
 
 // Rendering our Enemy.
@@ -44,7 +60,6 @@ FloatRect Laser::getLaserBounds() {
 	RectangleShape* ptrLaser = &laser;
 	return ptrLaser->getGlobalBounds();
 }
-
 
 Laser::~Laser()
 {

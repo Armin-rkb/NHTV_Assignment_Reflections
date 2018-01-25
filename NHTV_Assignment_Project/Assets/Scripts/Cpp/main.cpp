@@ -4,7 +4,7 @@
 #include "../Header/Score.h"
 #include "../Header/Player.h"
 #include "../Header/Ball.h"
-#include "../Header/Enemy.h"
+#include "../Header/EnemyHolder.h"
 
 using namespace sf;
 
@@ -28,8 +28,8 @@ int main() {
 	// Game vars.
 	Score score = Score(20, 660, 30);
 	Player player = Player(1280 / 2, 586);
-	Ball ball = Ball(120, 72, score);
-	Enemy enemy = Enemy(player);
+	Ball ball = Ball(120, 72);
+	EnemyHolder enemySpawner = EnemyHolder(player, ball, score);
 
 	Sprite ground;
 	ground.setTexture(groundTexture);
@@ -71,10 +71,10 @@ int main() {
 			// Update.
 			player.Update();
 			ball.Update();
-			enemy.Update();
+			enemySpawner.Update();
 
 			// Collision.
-			ball.CheckCollision(player, enemy);
+			ball.CheckCollision(player);
 
 			// Clear.
 			window.clear(Color(150, 150, 150));
@@ -83,7 +83,8 @@ int main() {
 			window.draw(ground);
 			score.Draw(window);
 			player.Draw(window);
-			enemy.Draw(window);
+			enemySpawner.Draw(window);
+		
 			ball.Draw(window);
 
 			// Display the window.

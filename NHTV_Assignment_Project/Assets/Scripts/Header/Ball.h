@@ -1,7 +1,6 @@
 #pragma once
 #include "SFML\Graphics.hpp"
 #include "../Header/Player.h"
-#include "../Header/Enemy.h"
 #include "../Header/Score.h"
 
 using namespace sf;
@@ -14,13 +13,13 @@ enum BallState {
 class Ball
 {
 public:
-	Ball(float x, float y, Score& score);
+	Ball(float x, float y);
 	~Ball();
 
 public:
 	void Draw(RenderWindow& window);
 	void Update();
-	void CheckCollision(Player& player, Enemy& enemy);
+	void CheckCollision(Player& player);
 	void Move();
 	void BallHit(float newDirX, float newDirY);
 
@@ -40,5 +39,4 @@ private:
 	Vector2f dir;
 	float ballSpeed;
 	int cdTime = 0;
-	Score* scorePtr;
 };

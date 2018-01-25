@@ -1,13 +1,12 @@
 #include "../Header/Enemy.h"
 
-Enemy::Enemy(Player& player)
+Enemy::Enemy(float x, float y, Texture& enemyTexture, Player& player)
 {
 	// Load the textures.
-	enemyTexture.loadFromFile("Assets/Sprites/enemy_invader.png");
 	enemySprite.setTexture(enemyTexture);
 
 	// Set enemy transform.
-	enemySprite.setPosition(500, 35);
+	enemySprite.setPosition(x, y);
 	enemySprite.setScale(1.25, 1.25);
 	enemySprite.setOrigin((float)enemySprite.getTextureRect().width / 2, (float)enemySprite.getTextureRect().height / 2);
 	
@@ -24,8 +23,15 @@ void Enemy::Update()
 		Move();
 		ShootLaser();
 	}
+
+	// Update all our lasers.
 	for (int i = 0; i < (int)laserVec.size(); i++) {
 		laserVec[i].Update(playerPtr);
+		
+		// Removing lasers that our outside of the gamefield.
+		if (laserVec[i].WithinBounds() == false) {
+			laserVec.erase(laserVec.begin() + i);
+		}
 	}
 }
 
@@ -42,9 +48,10 @@ void Enemy::Move()
 	}
 }
 
+// Spawning a laser.
 void Enemy::ShootLaser()
 {
-	if (laserTime.getElapsedTime() > seconds(3)) {
+	if (laserTime.getElapsedTime() > seconds(1)) {
 		// Create a new Laser and add it to the list.
 		Laser newLaser;
 		newLaser.setPosition(enemySprite.getPosition().x, enemySprite.getPosition().y);

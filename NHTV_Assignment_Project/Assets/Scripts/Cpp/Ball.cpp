@@ -3,7 +3,7 @@
 
 using namespace std;
 
-Ball::Ball(float x, float y, Score& score)
+Ball::Ball(float x, float y)
 {
 	// Load the textures.
 	ballTextureSafe.loadFromFile("Assets/Sprites/blue_ball.png");
@@ -14,7 +14,6 @@ Ball::Ball(float x, float y, Score& score)
 	ballSprite.setScale(2, 2);
 	ballSprite.setOrigin((float)ballSprite.getTextureRect().width / 2, (float)ballSprite.getTextureRect().height / 2);
 
-	scorePtr = &score;
 	ballSpeed = 5;
 	dir.x = 1;
 	dir.y = 1;
@@ -53,7 +52,7 @@ void Ball::Update()
 	}
 }
 
-void Ball::CheckCollision(Player& player, Enemy& enemy)
+void Ball::CheckCollision(Player& player)
 {
 	// Reflector Collision with ball.
 	if (player.isReflecting && ballState == DANGEROUS)
@@ -93,16 +92,6 @@ void Ball::CheckCollision(Player& player, Enemy& enemy)
 		if (player.getBounds().intersects(getBallBounds()))
 		{
 			player.PlayerHit();
-		}
-	}
-
-	// Ball collision with enemy.
-	if (ballState == SAFE && enemy.enemyState == ALIVE)
-	{
-		if (getBallBounds().intersects(enemy.getEnemyBounds()))
-		{
-			enemy.EnemyHit();
-			scorePtr->AddScore(1);
 		}
 	}
 }

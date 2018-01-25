@@ -14,7 +14,7 @@ enum EnemyState {
 class Enemy
 {
 public:
-	Enemy(Player& player);
+	Enemy(float x, float y, Texture& enemyTexture, Player& player);
 	~Enemy();
 
 public:
@@ -34,7 +34,6 @@ private:
 private:
 	Player* playerPtr;
 	vector<Laser> laserVec;
-	Texture enemyTexture;
 	float dirX;
 	float enemySpeed;
 	Clock laserTime;

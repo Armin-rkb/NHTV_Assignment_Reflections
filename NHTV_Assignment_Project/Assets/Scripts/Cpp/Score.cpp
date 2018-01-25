@@ -1,7 +1,5 @@
 #include "../Header/Score.h"
 
-
-
 Score::Score(float x, float y, int scoreSize)
 {
 	// Setting the text and font.

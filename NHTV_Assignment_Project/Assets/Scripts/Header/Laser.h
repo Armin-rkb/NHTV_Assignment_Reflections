@@ -14,6 +14,7 @@ public:
 	void Draw(RenderWindow& window);
 	void Update(Player* player);
 	void setPosition(float x, float y);
+	bool WithinBounds();
 
 public:
 	FloatRect getLaserBounds();
