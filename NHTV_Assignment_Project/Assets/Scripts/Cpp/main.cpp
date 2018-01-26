@@ -1,5 +1,6 @@
 #include <SFML\Graphics.hpp>
 #include <iostream>
+#include "../Header/States.h"
 #include "../Header/MenuButton.h"
 #include "../Header/Score.h"
 #include "../Header/Player.h"
@@ -8,12 +9,7 @@
 
 using namespace sf;
 
-enum gameStates {
-	STARTSCREEN,
-	GAME,
-	GAMEOVER
-};
-gameStates currentState = GAME;
+GameStates currentState = STARTSCREEN;
 
 int main() {
 	RenderWindow window(VideoMode(1280, 720), "Reflection", Style::Default);
@@ -22,14 +18,16 @@ int main() {
 	Texture groundTexture;
 	groundTexture.loadFromFile("Assets/Sprites/metal_ground.png");
 
+	Texture enemyTexture;
+	enemyTexture.loadFromFile("Assets/Sprites/enemy_invader.png");
+
 	// Menu vars.
 	MenuButton menuButton(groundTexture);
-
 	// Game vars.
 	Score score = Score(20, 660, 30);
 	Player player = Player(1280 / 2, 586);
 	Ball ball = Ball(120, 72);
-	EnemyHolder enemySpawner = EnemyHolder(player, ball, score);
+	EnemyHolder enemySpawner = EnemyHolder(enemyTexture, player, ball, score);
 
 	Sprite ground;
 	ground.setTexture(groundTexture);
@@ -47,14 +45,14 @@ int main() {
 					break;
 			}
 		}
-		
-		switch (currentState) 
+		int i = 0;
+		switch (currentState)
 		{
 		case STARTSCREEN:
 			// Startscreen logic.
 			// Update.
 			menuButton.CheckButtonPress(window, []{
-				currentState = GAME;
+				ChangeState(GAME);
 			});
 
 			// Clear.
@@ -84,12 +82,24 @@ int main() {
 			score.Draw(window);
 			player.Draw(window);
 			enemySpawner.Draw(window);
-		
 			ball.Draw(window);
 
 			// Display the window.
 			window.display();
 			break;
+		case GAMEOVER:
+			// Clear.
+			window.clear(Color(150, 150, 150));
+
+			// Rendering.
+			window.draw(ground);
+			score.Draw(window);
+			player.Draw(window);
+			enemySpawner.Draw(window);
+			ball.Draw(window);
+
+			// Display the window.
+			window.display();
 		}
 	}
 

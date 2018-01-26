@@ -14,7 +14,6 @@ Ball::Ball(float x, float y)
 	ballSprite.setScale(2, 2);
 	ballSprite.setOrigin((float)ballSprite.getTextureRect().width / 2, (float)ballSprite.getTextureRect().height / 2);
 
-	ballSpeed = 5;
 	dir.x = 1;
 	dir.y = 1;
 
@@ -151,7 +150,11 @@ void Ball::ChangeDirY(float newDirY)
 // Add speed to our ball.
 void Ball::IncreaseBallSpeed()
 {
-	ballSpeed += 1; 
+	if (ballSpeed >= 20) {
+		cout << "Max Speed!!" << endl;
+		return;
+	}
+	ballSpeed += 0.5; 
 }
 
 // Rendering our Ball.

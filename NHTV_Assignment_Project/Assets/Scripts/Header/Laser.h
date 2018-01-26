@@ -7,7 +7,7 @@ using namespace sf;
 class Laser
 {
 public:
-	Laser();
+	Laser(Vector2f& laserSize, float& laserSpeed);
 	~Laser();
 
 public:

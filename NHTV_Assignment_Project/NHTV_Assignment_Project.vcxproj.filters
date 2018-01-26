@@ -41,6 +41,9 @@
     <ClInclude Include="Assets\Scripts\Header\EnemyHolder.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Assets\Scripts\Header\States.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Assets\Scripts\Cpp\main.cpp">

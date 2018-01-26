@@ -29,6 +29,7 @@
     <ClInclude Include="Assets\Scripts\Header\MenuButton.h" />
     <ClInclude Include="Assets\Scripts\Header\Player.h" />
     <ClInclude Include="Assets\Scripts\Header\Score.h" />
+    <ClInclude Include="Assets\Scripts\Header\States.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Assets\Scripts\Cpp\Ball.cpp" />

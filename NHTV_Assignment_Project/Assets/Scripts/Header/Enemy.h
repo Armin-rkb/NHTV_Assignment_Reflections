@@ -11,10 +11,12 @@ enum EnemyState {
 	DEAD
 };
 
+struct EnemyType { float enemySpeed; float laserShootDelay; float laserSpeed; Vector2f laserSize; };
+
 class Enemy
 {
 public:
-	Enemy(float x, float y, Texture& enemyTexture, Player& player);
+	Enemy(float x, float y, EnemyType& enemyType, Texture& enemyTexture, Player& player);
 	~Enemy();
 
 public:
@@ -34,7 +36,10 @@ private:
 private:
 	Player* playerPtr;
 	vector<Laser> laserVec;
-	float dirX;
+	int dirX;
 	float enemySpeed;
+	float shootDelay;
 	Clock laserTime;
+	Vector2f laserSize;
+	float laserSpeed;
 };

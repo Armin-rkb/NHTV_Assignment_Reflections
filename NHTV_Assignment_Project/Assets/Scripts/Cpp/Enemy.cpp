@@ -1,6 +1,6 @@
 #include "../Header/Enemy.h"
 
-Enemy::Enemy(float x, float y, Texture& enemyTexture, Player& player)
+Enemy::Enemy(float x, float y, EnemyType& enemyType, Texture& enemyTexture, Player& player)
 {
 	// Load the textures.
 	enemySprite.setTexture(enemyTexture);
@@ -11,8 +11,14 @@ Enemy::Enemy(float x, float y, Texture& enemyTexture, Player& player)
 	enemySprite.setOrigin((float)enemySprite.getTextureRect().width / 2, (float)enemySprite.getTextureRect().height / 2);
 	
 	enemyState = ALIVE;
-	dirX = 1;
-	enemySpeed = 3;
+
+	// Enemy starts with a random direction.
+	dirX = (rand() & 1) == 0 ? -1 : 1;
+
+	enemySpeed = enemyType.enemySpeed;
+	shootDelay = enemyType.laserShootDelay;
+	laserSize = enemyType.laserSize;
+	laserSpeed = enemyType.laserSpeed;
 
 	playerPtr = &player;
 }
@@ -51,9 +57,9 @@ void Enemy::Move()
 // Spawning a laser.
 void Enemy::ShootLaser()
 {
-	if (laserTime.getElapsedTime() > seconds(1)) {
+	if (laserTime.getElapsedTime() > seconds(shootDelay)) {
 		// Create a new Laser and add it to the list.
-		Laser newLaser;
+		Laser newLaser = Laser(laserSize, laserSpeed);
 		newLaser.setPosition(enemySprite.getPosition().x, enemySprite.getPosition().y);
 		laserVec.push_back(newLaser);
 		

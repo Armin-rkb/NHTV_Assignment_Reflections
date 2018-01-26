@@ -23,6 +23,9 @@ public:
 	bool isReflecting;
 
 private:
+	void PlayerMovement();
+	void CheckReflector();
+	void ApplyGravity();
 	void Reflect();
 
 private:
@@ -32,5 +35,11 @@ private:
 	bool reflectCooling;
 	int jumpTime = 0;
 	Clock reflectTime;
+
+private:
+	const float groundHeight = 586;
+	const float movementSpeed = 12;
+	const float gravitySpeed = 16;
+	const float reflectorSize = 25;
 };
 

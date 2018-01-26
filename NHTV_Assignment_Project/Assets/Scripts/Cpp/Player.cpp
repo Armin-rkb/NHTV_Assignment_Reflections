@@ -1,14 +1,9 @@
 #include "../Header/Player.h"
+#include "../Header/States.h"
 #include <iostream>
 
 // Player Texture
 Texture playerTexture;
-
-// Gravity Variables.
-const float groundHeight = 586;
-const float movementSpeed = 12;
-const float gravitySpeed = 16;
-const float reflectorSize = 20;
 
 Player::Player(float x, float y)
 {
@@ -31,8 +26,19 @@ Player::Player(float x, float y)
 
 // Update gets called every frame.
 void Player::Update() {
-	// Player Input.
+	// Player movement.
+	PlayerMovement();
 
+	// Reflector.
+	CheckReflector();
+
+	// Gravity.
+	ApplyGravity();
+}
+
+// Walking and jumping of the player.
+void Player::PlayerMovement() 
+{
 	// Movement.
 	if (Keyboard::isKeyPressed(Keyboard::Key::A)) {
 		playerSprite.move(-movementSpeed, 0.0);
@@ -60,8 +66,10 @@ void Player::Update() {
 			jumpTime = 0;
 		}
 	}
+}
 
-	// Reflector
+void Player::CheckReflector()
+{
 	// Start reflecting when we aren't on cooldown.
 	if (Keyboard::isKeyPressed(Keyboard::Key::Space)) {
 		if (canReflect == true && reflectCooling == false) {
@@ -94,18 +102,21 @@ void Player::Update() {
 			reflectCooling = false;
 		}
 	}
+}
 
-	// Gravity
+// Add Gravity force to our player.
+void Player::Reflect()
+{
 	if (playerSprite.getPosition().y < groundHeight && !isJumping ||
-		playerSprite.getPosition().y < groundHeight && !Keyboard::isKeyPressed(Keyboard::Key::W)) 
+		playerSprite.getPosition().y < groundHeight && !Keyboard::isKeyPressed(Keyboard::Key::W))
 	{
 		playerSprite.move(0, gravitySpeed);
-	} else if (playerSprite.getPosition().y >= groundHeight) {
+	}
+	else if (playerSprite.getPosition().y >= groundHeight) {
 		canJump = true;
 		playerSprite.setPosition(playerSprite.getPosition().x, groundHeight);
 	}
 }
-
 // Reflector logic.
 void Player::Reflect()
 {
@@ -113,10 +124,11 @@ void Player::Reflect()
 	reflector.setPosition(playerSprite.getPosition());
 }
 
-// Gets called when the player is hit.
+// Switch to the gameover state.
 void Player::PlayerHit()
 {
 	cout << "Player Died!" << endl;
+	ChangeState(GAMEOVER);
 }
 
 // Rendering our player.

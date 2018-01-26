@@ -37,6 +37,6 @@ private:
 	Texture ballTextureDanger;
 	Texture ballTextureSafe;
 	Vector2f dir;
-	float ballSpeed;
+	float ballSpeed = 5;
 	int cdTime = 0;
 };

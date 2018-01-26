@@ -3,6 +3,7 @@
 
 MenuButton::MenuButton(Texture& texture)
 {
+	// Setting the texture of the button.
 	buttonTexture = texture;
 	buttonSprite.setTexture(buttonTexture);
 }

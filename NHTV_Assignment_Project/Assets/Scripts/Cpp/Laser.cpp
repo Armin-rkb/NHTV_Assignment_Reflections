@@ -1,13 +1,13 @@
 #include "../Header/Laser.h"
 
-Laser::Laser()
+Laser::Laser(Vector2f& size, float& speed)
 {
 	// Set Laser transform.
-	laser.setSize(Vector2f(15, 60));
-	laser.setOrigin(Vector2f(7.5, 30));
+	laser.setSize(size);
+	laser.setOrigin(Vector2f(size.x / 2, size.y / 2));
 	laser.setFillColor(Color(150, 000, 000));
 
-	laserSpeed = 15;
+	laserSpeed = speed;
 }
 
 void Laser::Update(Player* player)

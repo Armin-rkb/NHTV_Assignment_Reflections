@@ -1,17 +1,13 @@
 #include "../Header/EnemyHolder.h"
 
-EnemyHolder::EnemyHolder(Player& player, Ball& ball, Score& score)
+EnemyHolder::EnemyHolder(Texture& enemyTexture, Player& player, Ball& ball, Score& score)
 {
-	Texture enemyTexture;
-	enemyTexture.loadFromFile("Assets/Sprites/enemy_invader.png");
-
-	for (int i = 0; i < 3; i++) {
-		Enemy enemy = Enemy(150 * (float)i, 30, enemyTexture, player);
-		enemies.push_back(enemy);
-	}
-
+	enemyTexturePtr = &enemyTexture;
+	playerPtr = &player;
 	ballPtr = &ball;
 	scorePtr = &score;
+
+	SpawnEnemy();
 }
 
 // Call the update of all our enemies.
@@ -45,6 +41,17 @@ void EnemyHolder::Draw(RenderWindow& window)
 		enemies[i].Draw(window);
 	}
 }
+
+// Makes a new enemy and adds it to the list.
+void EnemyHolder::SpawnEnemy()
+{
+	for (int i = 0; i < 3; i++)
+	{
+		Enemy enemy = Enemy(650 * (float)i, 30, slowEnemy, (*enemyTexturePtr), (*playerPtr));
+		enemies.push_back(enemy);
+	}
+}
+
 
 EnemyHolder::~EnemyHolder()
 {
