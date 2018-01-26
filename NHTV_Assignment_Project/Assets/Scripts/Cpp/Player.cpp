@@ -105,7 +105,7 @@ void Player::CheckReflector()
 }
 
 // Add Gravity force to our player.
-void Player::Reflect()
+void Player::ApplyGravity()
 {
 	if (playerSprite.getPosition().y < groundHeight && !isJumping ||
 		playerSprite.getPosition().y < groundHeight && !Keyboard::isKeyPressed(Keyboard::Key::W))
@@ -117,6 +117,7 @@ void Player::Reflect()
 		playerSprite.setPosition(playerSprite.getPosition().x, groundHeight);
 	}
 }
+
 // Reflector logic.
 void Player::Reflect()
 {
