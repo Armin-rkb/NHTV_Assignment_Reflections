@@ -8,6 +8,7 @@ Texture playerTexture;
 Player::Player(float x, float y)
 {
 	playerTexture.loadFromFile("Assets/Sprites/player.png");
+	playerDeadTexture.loadFromFile("Assets/Sprites/player_gameover.png");
 	playerSprite.setTexture(playerTexture);
 	playerSprite.setPosition(x, y);
 
@@ -41,16 +42,28 @@ void Player::PlayerMovement()
 {
 	// Movement.
 	if (Keyboard::isKeyPressed(Keyboard::Key::A)) {
-		playerSprite.move(-movementSpeed, 0.0);
+		// Move the player left if we aren't ouside the bounds.
+		if (playerSprite.getPosition().x - (playerSprite.getTextureRect().width / 2) >= 0)
+		{
+			playerSprite.move(-movementSpeed, 0.0);
+		}
 		// Flip the sprite to face the walking direction.
 		if (playerSprite.getScale().x == 1)
+		{
 			playerSprite.setScale(-1, 1);
+		}
 	}
 	if (Keyboard::isKeyPressed(Keyboard::Key::D)) {
-		playerSprite.move(movementSpeed, 0.0);
+		// Move the player right if we aren't ouside the bounds.
+		if (playerSprite.getPosition().x + (playerSprite.getTextureRect().width / 2) <= 1280)
+		{
+			playerSprite.move(movementSpeed, 0.0);
+		}
 		// Flip the sprite to face the walking direction.
 		if (playerSprite.getScale().x == -1)
+		{
 			playerSprite.setScale(1, 1);
+		}
 	}
 
 	// Jumping
@@ -68,6 +81,7 @@ void Player::PlayerMovement()
 	}
 }
 
+// Reflector ability.
 void Player::CheckReflector()
 {
 	// Start reflecting when we aren't on cooldown.
@@ -129,6 +143,7 @@ void Player::Reflect()
 void Player::PlayerHit()
 {
 	cout << "Player Died!" << endl;
+	playerSprite.setTexture(playerDeadTexture);
 	ChangeState(GAMEOVER);
 }
 

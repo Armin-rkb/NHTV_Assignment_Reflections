@@ -29,6 +29,7 @@ private:
 	void Reflect();
 
 private:
+	Texture playerDeadTexture;
 	bool canJump;
 	bool isJumping;
 	bool canReflect;
