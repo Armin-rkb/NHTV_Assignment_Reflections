@@ -11,7 +11,7 @@ Score::Score(float x, float y, int scoreSize)
 
 	// Setting the background.
 	scoreBackground.setFillColor(Color::Black);
-	scoreBackground.setSize(Vector2f(scoreText.getLocalBounds().width * 1.5, scoreText.getLocalBounds().height * 2));
+	scoreBackground.setSize(Vector2f((float)(scoreText.getLocalBounds().width * 1.5), (float)(scoreText.getLocalBounds().height * 2)));
 	scoreBackground.setPosition(scoreText.getPosition().x - 5, scoreText.getPosition().y);
 }
 
@@ -35,6 +35,17 @@ void Score::UpdateScore()
 	ostringstream ssScore;
 	ssScore << "Score: " << scoreCount;
 	scoreText.setString(ssScore.str());
+}
+
+// Reset our score.
+void Score::Clear()
+{
+	scoreCount = 0;
+	UpdateScore();
+}
+
+int Score::GetScore() {
+	return scoreCount;
 }
 
 Score::~Score()

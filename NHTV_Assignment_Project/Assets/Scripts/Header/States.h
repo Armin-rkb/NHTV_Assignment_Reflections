@@ -2,6 +2,7 @@
 
 enum GameStates {
 	STARTSCREEN,
+	TUTORIAL,
 	GAME,
 	GAMEOVER
 };

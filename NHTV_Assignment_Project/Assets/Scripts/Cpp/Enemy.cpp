@@ -15,6 +15,7 @@ Enemy::Enemy(float x, float y, EnemyType& enemyType, Texture& enemyTexture, Play
 	// Enemy starts with a random direction.
 	dirX = (rand() & 1) == 0 ? -1 : 1;
 
+	// Set the enemy and laser type.
 	enemySpeed = enemyType.enemySpeed;
 	shootDelay = enemyType.laserShootDelay;
 	laserSize = enemyType.laserSize;
@@ -70,7 +71,6 @@ void Enemy::ShootLaser()
 
 void Enemy::EnemyHit()
 {
-	cout << "Enemy Hit!" << endl;
 	enemyState = DEAD; 
 }
 

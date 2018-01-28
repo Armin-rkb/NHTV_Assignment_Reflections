@@ -13,7 +13,7 @@ enum BallState {
 class Ball
 {
 public:
-	Ball(float x, float y);
+	Ball();
 	~Ball();
 
 public:
@@ -22,6 +22,7 @@ public:
 	void CheckCollision(Player& player);
 	void Move();
 	void BallHit(float newDirX, float newDirY);
+	void Reset();
 
 public:
 	FloatRect getBallBounds();
@@ -37,6 +38,6 @@ private:
 	Texture ballTextureDanger;
 	Texture ballTextureSafe;
 	Vector2f dir;
-	float ballSpeed = 5;
+	float ballSpeed ;
 	int cdTime = 0;
 };

@@ -39,7 +39,7 @@ void Laser::setPosition(float x, float y)
 // Check if the player is still within the game field.
 bool Laser::WithinBounds()
 {
-	if (laser.getPosition().y > (720 + laser.getSize().y)) {
+	if (laser.getPosition().y > (620 - (laser.getSize().y / 2))) {
 		// Laser is outside the gamefield.
 		return false;
 	}
@@ -49,7 +49,7 @@ bool Laser::WithinBounds()
 	}
 }
 
-// Rendering our Enemy.
+// Rendering our Laser.
 void Laser::Draw(RenderWindow& window)
 {
 	window.draw(laser);

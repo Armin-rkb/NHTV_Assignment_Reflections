@@ -1,9 +1,7 @@
 #pragma once
 #include "SFML\Graphics.hpp"
 #include "../Header/Laser.h"
-#include <iostream>
 
-using namespace std;
 using namespace sf;
 
 enum EnemyState {

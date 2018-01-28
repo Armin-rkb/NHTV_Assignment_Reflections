@@ -20,16 +20,19 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\Sprites\metal_ground.png" />
+    <Image Include="icon1.ico" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Assets\Scripts\Header\Ball.h" />
     <ClInclude Include="Assets\Scripts\Header\Enemy.h" />
     <ClInclude Include="Assets\Scripts\Header\EnemyHolder.h" />
     <ClInclude Include="Assets\Scripts\Header\Laser.h" />
-    <ClInclude Include="Assets\Scripts\Header\MenuButton.h" />
+    <ClInclude Include="Assets\Scripts\Header\UIButton.h" />
     <ClInclude Include="Assets\Scripts\Header\Player.h" />
     <ClInclude Include="Assets\Scripts\Header\Score.h" />
     <ClInclude Include="Assets\Scripts\Header\States.h" />
+    <ClInclude Include="Assets\Scripts\Header\UIText.h" />
+    <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Assets\Scripts\Cpp\Ball.cpp" />
@@ -37,9 +40,13 @@
     <ClCompile Include="Assets\Scripts\Cpp\EnemyHolder.cpp" />
     <ClCompile Include="Assets\Scripts\Cpp\Laser.cpp" />
     <ClCompile Include="Assets\Scripts\Cpp\main.cpp" />
-    <ClCompile Include="Assets\Scripts\Cpp\MenuButton.cpp" />
+    <ClCompile Include="Assets\Scripts\Cpp\UIButton.cpp" />
     <ClCompile Include="Assets\Scripts\Cpp\Player.cpp" />
     <ClCompile Include="Assets\Scripts\Cpp\Score.cpp" />
+    <ClCompile Include="Assets\Scripts\Cpp\UIText.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="NHTV_Assignment_Project.rc" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

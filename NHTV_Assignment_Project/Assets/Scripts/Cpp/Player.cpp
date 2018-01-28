@@ -1,28 +1,17 @@
 #include "../Header/Player.h"
-#include "../Header/States.h"
-#include <iostream>
 
-// Player Texture
-Texture playerTexture;
-
-Player::Player(float x, float y)
+Player::Player()
 {
 	playerTexture.loadFromFile("Assets/Sprites/player.png");
 	playerDeadTexture.loadFromFile("Assets/Sprites/player_gameover.png");
-	playerSprite.setTexture(playerTexture);
-	playerSprite.setPosition(x, y);
-
+	Reset();
+	
 	Vector2f playerSize = Vector2f((float)playerSprite.getTextureRect().width, (float)playerSprite.getTextureRect().height);
 	playerSprite.setOrigin(playerSize.x / 2, playerSize.y / 2);
 
 	reflector.setOrigin((playerSize.x / 2) + (reflectorSize / 2), (playerSize.y / 2) + (reflectorSize / 2));
 	reflector.setSize(Vector2f(playerSize.x + reflectorSize, playerSize.y + reflectorSize));
 	reflector.setFillColor(Color(000, 000, 150, 190));
-
-	canJump = true;
-	canReflect = true;
-	reflectCooling = false;
-	isReflecting = false;
 }
 
 // Update gets called every frame.
@@ -99,7 +88,7 @@ void Player::CheckReflector()
 
 	// Activate the reflector for an amount of time.
 	if (isReflecting == true) {
-		if (reflectTime.getElapsedTime() < milliseconds(100)) {
+		if (reflectTime.getElapsedTime() < milliseconds(150)) {
 			Reflect();
 		}
 		else {
@@ -112,7 +101,7 @@ void Player::CheckReflector()
 
 	// Cooldown for a set amount of time.
 	if (isReflecting == false && reflectCooling == true) {
-		if (reflectTime.getElapsedTime() > milliseconds(500)) {
+		if (reflectTime.getElapsedTime() > milliseconds(400)) {
 			reflectCooling = false;
 		}
 	}
@@ -142,9 +131,20 @@ void Player::Reflect()
 // Switch to the gameover state.
 void Player::PlayerHit()
 {
-	cout << "Player Died!" << endl;
 	playerSprite.setTexture(playerDeadTexture);
 	ChangeState(GAMEOVER);
+}
+
+// Resetting our Player to the default state.
+void Player::Reset()
+{
+	playerSprite.setTexture(playerTexture);
+	playerSprite.setPosition(640, 586);
+
+	canJump = true;
+	canReflect = true;
+	reflectCooling = false;
+	isReflecting = false;
 }
 
 // Rendering our player.

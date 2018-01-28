@@ -1,23 +1,15 @@
 #include "../Header/Ball.h"
-#include <iostream>
 
-using namespace std;
-
-Ball::Ball(float x, float y)
+Ball::Ball()
 {
 	// Load the textures.
 	ballTextureSafe.loadFromFile("Assets/Sprites/blue_ball.png");
 	ballTextureDanger.loadFromFile("Assets/Sprites/red_ball.png");
-	ballSprite.setTexture(ballTextureDanger);
 
-	ballSprite.setPosition(x, y);
 	ballSprite.setScale(2, 2);
 	ballSprite.setOrigin((float)ballSprite.getTextureRect().width / 2, (float)ballSprite.getTextureRect().height / 2);
 
-	dir.x = 1;
-	dir.y = 1;
-
-	ballState = DANGEROUS;
+	Reset();
 }
 
 // Update gets called every frame.
@@ -58,27 +50,23 @@ void Ball::CheckCollision(Player& player)
 	{
 		if (player.getReflectorBounds().intersects(getBallBounds()))
 		{
-			// Change the direction.
+			// Change the direction of the ball depending of which side is hit.
 			float deltaX = ballSprite.getPosition().x - player.playerSprite.getPosition().x;
 			float deltaY = ballSprite.getPosition().y - player.playerSprite.getPosition().y;
 			if (abs(deltaX) > abs(deltaY)) {
 				if (deltaX <= 0) {
 					BallHit(-1, 0);
-					cout << "Left" << endl;
 				}
 				else {
 					BallHit(1, 0);
-					cout << "Right" << endl;
 				}
 			}
 			else {
 				if (deltaY <= 0) {
 					BallHit(0, -1);
-					cout << "Top" << endl;
 				}
 				else {
 					BallHit(0, 1);
-					cout << "Bottom" << endl;
 				}
 			}
 		}
@@ -151,10 +139,20 @@ void Ball::ChangeDirY(float newDirY)
 void Ball::IncreaseBallSpeed()
 {
 	if (ballSpeed >= 20) {
-		cout << "Max Speed!!" << endl;
 		return;
 	}
 	ballSpeed += 0.5; 
+}
+
+// Resetting our ball to the default state.
+void Ball::Reset()
+{
+	ballSpeed = 5;
+	dir.x = 1;
+	dir.y = -1;
+	ballSprite.setPosition(120, 72);
+	ballState = DANGEROUS;
+	ballSprite.setTexture(ballTextureDanger);
 }
 
 // Rendering our Ball.

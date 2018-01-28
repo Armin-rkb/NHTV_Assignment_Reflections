@@ -1,19 +1,20 @@
 #pragma once
 #include <SFML\Graphics.hpp>
+#include "../Header/States.h"
 
-using namespace std;
 using namespace sf;
 
 class Player
 {
 public:
-	Player(float x, float y);
+	Player();
 	~Player();
 
 public:
 	void Draw(RenderWindow& window);
 	void Update();
 	void PlayerHit();
+	void Reset();
 
 public:
 	FloatRect getBounds();
@@ -29,6 +30,7 @@ private:
 	void Reflect();
 
 private:
+	Texture playerTexture;
 	Texture playerDeadTexture;
 	bool canJump;
 	bool isJumping;

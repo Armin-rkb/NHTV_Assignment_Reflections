@@ -14,6 +14,8 @@ public:
 public:
 	void Draw(RenderWindow& window);
 	void AddScore(int amount);
+	void Clear();
+	int GetScore();
 
 private:
 	void UpdateScore();
