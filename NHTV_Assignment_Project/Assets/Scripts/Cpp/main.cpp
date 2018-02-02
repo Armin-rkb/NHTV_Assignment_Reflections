@@ -11,7 +11,7 @@
 #include "../Header/EnemyHolder.h"
 
 GameStates currentState = STARTSCREEN;
-
+ 
 Score* scorePtr;
 Player* playerPtr;
 Ball* ballPtr;
@@ -55,11 +55,10 @@ int main() {
 	enemyTexture.loadFromFile("Assets/Sprites/enemy_invader.png");
 
 	// Menu vars.
-	UIText gameTitle(640, 100, "Aegis Reflector", 64, "Assets/Fonts/pixelFont.ttf");
-	UIButton playGameButton(640, 345, "Assets/Sprites/play_button.png");
-	UIButton helpButton(640, 440, "Assets/Sprites/help_button.png");
-	UIButton mainMenuButton(640, 550, "Assets/Sprites/menu_button.png");
-
+	UIText gameTitle(640, 100, "Aegis Reflector", 72, "Assets/Fonts/pixelFont.ttf");
+	UIButton playGameButton(640, 345, "Assets/Sprites/button_red.png", "PLAY", 52);
+	UIButton helpButton(640, 440, "Assets/Sprites/button_blue.png", "HELP", 52);
+	
 	Sprite menuBG;
 	menuBG.setTexture(menuTexture);
 
@@ -67,7 +66,7 @@ int main() {
 	tutorial.setTexture(tutorialTexture);
 	
 	// Game vars.
-	Score score = Score(20, 660, 30);
+	Score score = Score(100, 660, 30);
 	Player player = Player();
 	Ball ball = Ball();
 	EnemyHolder enemyHolder = EnemyHolder(enemyTexture, player, ball, score);
@@ -77,7 +76,10 @@ int main() {
 	ground.setPosition(0, 620);
 
 	// Game over vars.
-	UIText endScore(640, 360, "Game over!\nEnd score: ", 52, "Assets/Fonts/pixelFont.ttf");
+	UIText gameoverText(655, 250, "Game over!", 72, "Assets/Fonts/pixelFont.ttf", Color(220, 50, 0));
+	UIText endScoreText(640, 310, "End score: ", 52, "Assets/Fonts/pixelFont.ttf");
+	UIButton playAgainButton(640, 455, "Assets/Sprites/button_red.png", "RETRY", 52);
+	UIButton mainMenuButton(640, 550, "Assets/Sprites/button_blue.png", "MENU", 52);
 
 	// Assign pointers.
 	scorePtr = &score;
@@ -196,6 +198,15 @@ int main() {
 			while ((DWORD)gameTime.getElapsedTime().asMilliseconds() > nextGameTick && loops < MAX_FRAMESKIP)
 			{
 				// Update.
+				playAgainButton.CheckButtonPress(window, [] {
+					gameMusicPtr->play();
+
+					playerPtr->Reset();
+					ballPtr->Reset();
+					enemyHolderPtr->ClearEnemies();
+					scorePtr->Clear();
+					ChangeState(GAME);
+				});
 				mainMenuButton.CheckButtonPress(window, [] {
 					gameMusicPtr->stop();
 					menuMusicPtr->play();
@@ -219,9 +230,11 @@ int main() {
 			player.Draw(window);
 			enemyHolder.Draw(window);
 			ball.Draw(window);
-			endScore.SetText(" Game over!\nEnd score: " + to_string(score.GetScore()));
-			endScore.Draw(window);
+			endScoreText.SetText("End score: " + to_string(score.GetScore()));
+			endScoreText.Draw(window);
+			gameoverText.Draw(window);
 
+			playAgainButton.Draw(window);
 			mainMenuButton.Draw(window);
 
 			// Display the window.

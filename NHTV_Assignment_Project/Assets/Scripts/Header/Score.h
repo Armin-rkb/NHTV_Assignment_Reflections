@@ -1,6 +1,6 @@
 #pragma once
 #include "SFML\Graphics.hpp"
-#include <sstream>
+#include "../Header/UIText.h"
 #include <iostream>
 
 using namespace sf;
@@ -15,6 +15,8 @@ public:
 	void Draw(RenderWindow& window);
 	void AddScore(int amount);
 	void Clear();
+
+public:
 	int GetScore();
 
 private:
@@ -22,7 +24,6 @@ private:
 
 private:
 	int scoreCount = 0;
-	Text scoreText;
-	Font textFont;
+	UIText* scoreText;
 	RectangleShape scoreBackground;
 };

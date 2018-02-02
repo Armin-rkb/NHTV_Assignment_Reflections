@@ -50,6 +50,7 @@ void EnemyHolder::SpawnCheck()
 void EnemyHolder::SpawnEnemy()
 {
 	if (spawnTime.getElapsedTime() > seconds(1)) {
+		//Spawning a random enemy type.
 		int rndType = rand() % 3;
 		Enemy enemy = Enemy(650, 30, enemyTypeList[rndType], (*enemyTexturePtr), (*playerPtr));
 		enemies.push_back(enemy);
